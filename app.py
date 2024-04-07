@@ -12,7 +12,7 @@ couriers = my_db.Couriers
 delivery = my_db.Delivery
 
 
-@app.get("/find_user")
+@app.get("/user")
 def find_user(response: Response, id: str):
     user = users.find_one({"id": id})
     if user is None:
@@ -22,7 +22,7 @@ def find_user(response: Response, id: str):
     return {"name": user['name'], 'address': user['address'], "code": response.status_code}
 
 
-@app.get("/find_courier")
+@app.get("/courier")
 def find_courier(response: Response, id: str):
     courier = couriers.find_one({"id": id})
     if courier is None:
@@ -64,28 +64,28 @@ def create_order(response: Response, id_u: str, id_c: str):
     return {"message": "ok", "code": response.status_code}
 
 
-@app.delete("/remove_user")
+@app.delete("/user")
 def delete_user(response: Response, id: str):
     users.delete_one({"id": id})
     response.status_code = 200
     return {"message": f"removed user with id = {id}", "code": response.status_code}
 
 
-@app.delete("/remove_courier")
+@app.delete("/courier")
 def delete_courier(response: Response, id: str):
     couriers.delete_one({"id": id})
     response.status_code = 200
     return {"message": f"removed courier with id = {id}", "code": response.status_code}
 
 
-@app.delete("/remove_order")
+@app.delete("/order")
 def delete_order(response: Response, id: str):
     delivery.delete_one({"id": id})
     response.status_code = 200
     return {"message": f"removed order with id = {id}", "code": response.status_code}
 
 
-@app.put("/update_user")
+@app.put("/user")
 def update_user(response: Response, id: str, name: str, address: str):
     user = users.find_one({"id": id})
     if user is None:
@@ -96,7 +96,7 @@ def update_user(response: Response, id: str, name: str, address: str):
     return {"message": "user info updated", "code": response.status_code}
 
 
-@app.put("/update_courier")
+@app.put("/courier")
 def update_courier(response: Response, id: str, name: str):
     courier = couriers.find_one({"id": id})
     if courier is None:
@@ -107,7 +107,7 @@ def update_courier(response: Response, id: str, name: str):
     return {"message": "courier info updated", "code": response.status_code}
 
 
-@app.put("/update_order")
+@app.put("/order")
 def update_order(response: Response, id: str, id_u: str, id_c: str):
     order = delivery.find_one({"id": id})
     if order is None:
