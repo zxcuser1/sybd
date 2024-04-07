@@ -32,7 +32,7 @@ def find_courier(response: Response, id: str):
     return {"name": courier['name'], "code": response.status_code}
 
 
-@app.post("/create_user")
+@app.post("/user")
 def create_user(response: Response, name: str, address: str):
     id_u = int(users.find().sort('_id', -1).limit(1)[0]['id'])
     users.insert_one({"id": str(id_u + 1), "name": name, "address": address})
@@ -40,7 +40,7 @@ def create_user(response: Response, name: str, address: str):
     return {"message": "ok", "code": response.status_code}
 
 
-@app.post("/create_courier")
+@app.post("/courier")
 def create_courier(response: Response, name: str):
     id_c = int(couriers.find().sort('_id', -1).limit(1)[0]['id'])
     couriers.insert_one({"id": str(id_c + 1), "name": name})
@@ -48,7 +48,7 @@ def create_courier(response: Response, name: str):
     return {"message": "ok", "code": response.status_code}
 
 
-@app.post("/create_order")
+@app.post("/order")
 def create_order(response: Response, id_u: str, id_c: str):
     id_o = int(delivery.find().sort('_id', -1).limit(1)[0]['id'])
     user = users.find_one({"id": id_u})
